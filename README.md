@@ -1,7 +1,5 @@
-# PPdiffusers-webui
-
 <table>
   <tr>
-    <td bgcolor=#FF4500>PPdiffusers-webui</td>
+    <td>PPdiffusers-webui</td>
   </tr>
 </table>
