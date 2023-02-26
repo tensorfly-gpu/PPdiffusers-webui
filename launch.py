@@ -1,5 +1,6 @@
 # 环境配置，启动ui界面
 import os
+import webui
 
 def prepare_environment():
     # 安装环境
@@ -22,7 +23,7 @@ def diffusers_auto_update():
         os.system("pip install -U safetensors --user -i https://mirror.baidu.com/pypi/simple")
 
 def start():
-    pass
+    webui.demo.launch()
 
 if __name__ == "__main__":
     prepare_environment()
