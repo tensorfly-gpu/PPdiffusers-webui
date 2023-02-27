@@ -88,31 +88,6 @@ def ReadImage(image, height=None, width=None):
         image = image.resize((width, height), Image.ANTIALIAS)
     return image
 
-
-# inpaint图片后处理
-def inpaint_post_process(image_path, mask_path, inpaint_path, save_path):
-    ori_image = Image.open(image_path)
-    mask = Image.open(mask_path)
-    inpaint = Image.open(inpaint_path)
-
-    ori_array = np.array(ori_image)[:, :, :3].transpose([2, 0, 1])
-    C, H, W = ori_array.shape
-
-    mask_array = np.array(mask)[:, :, :3] / 255
-    mask_array = cv2.resize(mask_array, (W, H)).transpose([2, 0, 1])
-
-    inpaint_array = np.array(inpaint)[:, :, :3]
-    inpaint_array = cv2.resize(inpaint_array, (W, H)).transpose([2, 0, 1])
-
-    result_array = mask_array * inpaint_array + (1 - mask_array) * ori_array
-
-    result_array = result_array.transpose([1, 2, 0])
-    result_array = result_array.astype(np.uint8)
-    result_image = Image.fromarray(result_array)
-
-    result_image.save(save_path)
-
-
 def txt2img(pipe, prompt, scheduler_name, width, height, guidance_scale, num_inference_steps, negative_prompt,
             max_embeddings_multiples, enable_parsing, fp16=False, seed=None):
     scheduler = pipe.create_scheduler(scheduler_name)
