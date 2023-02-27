@@ -6,6 +6,8 @@
 
 *TODO*:
 
-1、text2img
+1、text2img √
 
-2、img2img
+2、img2img √
+
+3、inpaint
