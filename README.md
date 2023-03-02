@@ -10,4 +10,8 @@
 
 2、img2img √
 
-3、inpaint
+3、inpaint　√
+
+4、lora
+
+5、controlnet
