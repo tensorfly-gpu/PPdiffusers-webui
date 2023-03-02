@@ -6,6 +6,7 @@ import os
 import utils
 from PIL import Image
 from modules import txt2img, img2img, inpaint
+import zipfile
 
 ## UI设计 ##
 with gr.Blocks() as demo:
@@ -16,7 +17,11 @@ with gr.Blocks() as demo:
     """)
 
     # 暂不支持换模型
-    model_name = gr.Dropdown(utils.model_name_list, label="请选择一个基础模型", default="Baitian/momocha", multiselect=False)
+    with gr.Row():
+        with gr.Column():
+            model_name = gr.Dropdown(utils.model_name_list, label="请选择一个基础模型", default="Baitian/momocha", multiselect=False)    # 同时作为训练lora的预训练模型
+        with gr.Column():
+            lora_name = gr.Dropdown(utils.model_name_list, label="请选择一个lora模型", default="text_encoder_unet_lora.safetensors", multiselect=False)
     # 多个tab
     with gr.Tabs():
         with gr.TabItem("文生图"):
@@ -132,6 +137,30 @@ with gr.Blocks() as demo:
                     inpaint_output = gr.Image(type="pil")
                     inpaint_button = gr.Button("生成")
 
+        with gr.TabItem("训练"):
+            # 多个tab
+            with gr.Tabs():
+                # 训练第一种lora
+                with gr.TabItem("train dreambooth lora"):
+                    # 使用1行2列
+                    with gr.Row():
+                        with gr.Column():  # 左边一列是输入
+                            # dataset通过解压上传的压缩包上传时，同时启动训练
+
+                            # TODO: 其他参数设置
+
+                            file_upload = gr.File()
+                            output_text = gr.Textbox()
+
+                            train_dreambooth_lora_button = gr.Button("开始训练")
+
+                        with gr.Column():  # 右边一列是输出
+                            # 输出框
+                            test2 = gr.Textbox(label="seed", default="-1", lines=1, placeholder="请输入种子，默认-1")
+
+                with gr.TabItem("train text2image lora"):
+                    test3 = gr.Textbox(label="seed", default="-1", lines=1, placeholder="请输入种子，默认-1")
+
     txt2img_button.click(fn=txt2img,
                       inputs=[model_name, txt2img_prompt, txt2img_negative_prompt, txt2img_sampler, txt2img_Image_size, txt2img_cfg_scale, txt2img_steps, txt2img_seed],
                       outputs=txt2img_output)
@@ -143,4 +172,9 @@ with gr.Blocks() as demo:
     inpaint_button.click(fn=inpaint,
                          inputs=[model_name, inpaint_image_mask_init, inpaint_prompt, inpaint_negative_prompt, inpaint_sampler, inpaint_Image_size, inpaint_strength, inpaint_cfg_scale, inpaint_steps, inpaint_seed],
                          outputs=inpaint_output)
+
+    train_dreambooth_lora_button.click(
+        fn=utils.train_dreambooth_lora,
+        inputs=file_upload,
+        outputs=output_text)
 
