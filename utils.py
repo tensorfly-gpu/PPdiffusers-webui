@@ -18,9 +18,9 @@ pipe = StableDiffusionPipelineAllinOne.from_pretrained(pretrained_model_name_or_
                                                         requires_safety_checker=False)
 # 设置采样器，采样器移到这里实现
 pipe.scheduler = DPMSolverMultistepScheduler.from_config(pipe.scheduler.config)
-# 加载lora权重, 可以选择加载和不加载lora
-pipe.apply_lora(lora_outputs_path)
-pipe.apply_lora()
+# 加载lora权重, 可以选择加载和不加载lora, 没有lora时注释下行
+# pipe.apply_lora(lora_outputs_path)
+# pipe.apply_lora()
 
 support_scheduler = [
     "EulerAncestralDiscrete",

@@ -28,7 +28,7 @@ def diffusers_auto_update():
         os.system("python -m pip install paddlepaddle-gpu==0.0.0.post112 -f https://www.paddlepaddle.org.cn/whl/windows/gpu/develop.html")
 
 def start():
-    webui.demo.launch()
+    webui.demo.launch(share=True)
 
 if __name__ == "__main__":
     prepare_environment()
