@@ -25,7 +25,8 @@ def diffusers_auto_update():
         os.system("pip install ppdiffusers==0.11.0 --user -i https://mirror.baidu.com/pypi/simple")
         os.system("pip install paddlenlp==2.5.1.post --user -i https://mirror.baidu.com/pypi/simple")
         os.system("pip install safetensors==0.2.8 --user -i https://mirror.baidu.com/pypi/simple")
-        os.system("python -m pip install paddlepaddle-gpu==0.0.0.post112 -f https://www.paddlepaddle.org.cn/whl/windows/gpu/develop.html")
+        os.system("pip install paddlehub --user -i https://mirror.baidu.com/pypi/simple")
+        os.system("python -m pip install paddlepaddle-gpu==2.4.2.post112 -f https://www.paddlepaddle.org.cn/whl/windows/mkl/avx/stable.html --user")
 
 def start():
     webui.demo.launch(share=True)
