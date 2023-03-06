@@ -19,6 +19,7 @@ def diffusers_auto_update():
 
     except (ModuleNotFoundError, ImportError, AttributeError):
         print('检测到库不完整或版本不正确, 正在安装库')
+        os.system("pip install -U gradio --user -i https://mirror.baidu.com/pypi/simple")
         os.system("pip install -U pip  -i https://mirror.baidu.com/pypi/simple")
         os.system("pip install -U OmegaConf --user -i https://mirror.baidu.com/pypi/simple")
         os.system("pip install ppdiffusers==0.11.0 --user -i https://mirror.baidu.com/pypi/simple")
