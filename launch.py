@@ -1,6 +1,5 @@
 # 环境配置，启动ui界面
 import os
-import webui
 
 def prepare_environment():
     # 安装环境
@@ -29,6 +28,7 @@ def diffusers_auto_update():
         os.system("python -m pip install paddlepaddle-gpu==2.4.2.post112 -f https://www.paddlepaddle.org.cn/whl/windows/mkl/avx/stable.html --user")
 
 def start():
+    import webui
     webui.demo.launch(share=True)
 
 if __name__ == "__main__":
