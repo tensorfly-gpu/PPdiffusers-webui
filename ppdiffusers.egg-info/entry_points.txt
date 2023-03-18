@@ -1,0 +1,3 @@
+[console_scripts]
+ppdiffusers-cli = ppdiffusers.commands.ppdiffusers_cli:main
+
