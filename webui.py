@@ -16,7 +16,7 @@ with gr.Blocks() as demo:
     # 顶部文字
     gr.Markdown("""
     # AI绘画
-    ### 基于百度飞桨的大型开源项目：https://github.com/tensorfly-gpu/PPdiffusers-webui
+    ### 开源项目地址：https://github.com/tensorfly-gpu/PPdiffusers-webui
     """)
 
     # 暂不支持换模型
