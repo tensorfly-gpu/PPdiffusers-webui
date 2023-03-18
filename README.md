@@ -11,3 +11,5 @@ step2：运行launch.py
 2023/2/27：inpaint，优化后端调用模式
 
 2023/3/2：lora，paddlenlp版本升级
+
+2023/3/18: controlnet
