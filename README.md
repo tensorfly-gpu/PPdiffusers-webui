@@ -12,6 +12,6 @@
 
 3、inpaint　√
 
-4、lora
+4、lora √
 
-5、controlnet
+5、controlnet √
