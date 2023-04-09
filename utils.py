@@ -10,7 +10,7 @@ import os
 import zipfile
 
 # 基础模型，需要是paddle版本的权重，未来会加更多的权重
-pretrained_model_name_or_path = "takuma104/control_sd15_openpose"
+pretrained_model_name_or_path = "/home/aistudio/PPdiffusers-webui/models/NovelAI_latest_ab21ba3c_paddle"
 # 我们加载safetensor版本的权重
 lora_outputs_path = "text_encoder_unet_lora.safetensors"
 # 加载之前的模型
