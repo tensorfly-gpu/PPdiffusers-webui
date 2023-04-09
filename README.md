@@ -1,7 +1,5 @@
 # PPdiffusers-webui
 
-分支aistudio用于在飞桨开放平台上使用，分支ppdiffusers用于在本地使用
-
 step1：安装环境，gpu版本的paddlepaddle，cuda
 
 step2：运行launch.py
