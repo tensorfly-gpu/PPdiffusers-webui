@@ -9,7 +9,7 @@ from modules import txt2img, img2img, inpaint
 import zipfile
 
 # controlnet #
-from examples.controlnet.gradio_pose2image import process as pose2image
+# from examples.controlnet.gradio_pose2image import process as pose2image
 
 ## UI设计 ##
 with gr.Blocks() as demo:
