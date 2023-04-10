@@ -16,9 +16,12 @@ import os
 import time
 from io import BytesIO
 
+# isort: split
+import paddle
+
+# isort: split
 import fastdeploy as fd
 import numpy as np
-import paddle
 import requests
 from fastdeploy import ModelFormat
 from PIL import Image
@@ -59,8 +62,8 @@ def parse_arguments():
         "--backend",
         type=str,
         default="paddle",
-        # Note(zhoushunjie): Will support 'tensorrt', 'paddle-tensorrt' soon.
-        choices=["onnx_runtime", "paddle", "paddle-tensorrt", "tensorrt", "paddlelite"],
+        # Note(zhoushunjie): Will support 'tensorrt', 'paddle_tensorrt' soon.
+        choices=["onnx_runtime", "paddle", "paddle_tensorrt", "tensorrt", "paddlelite"],
         help="The inference runtime backend of unet model and text encoder model.",
     )
     parser.add_argument(
@@ -107,12 +110,13 @@ def create_paddle_inference_runtime(
     paddle_stream=None,
 ):
     option = fd.RuntimeOption()
-    option.use_paddle_backend()
+    option.use_paddle_infer_backend()
     if device_id == -1:
         option.use_cpu()
     else:
         option.use_gpu(device_id)
-    if paddle_stream is not None:
+    # (TODO, junnyu) remove use_trt
+    if use_trt and paddle_stream is not None:
         option.set_external_raw_stream(paddle_stream)
     for pass_name in disable_paddle_pass:
         option.paddle_infer_option.delete_pass(pass_name)
@@ -121,7 +125,18 @@ def create_paddle_inference_runtime(
         option.paddle_infer_option.enable_trt = True
         if use_fp16:
             option.trt_option.enable_fp16 = True
-        cache_file = os.path.join(model_dir, model_prefix, "inference.trt")
+        else:
+            # Note(zhoushunjie): These four passes don't support fp32 now.
+            # Remove this line of code in future.
+            only_fp16_passes = [
+                "trt_cross_multihead_matmul_fuse_pass",
+                "trt_flash_multihead_matmul_fuse_pass",
+                "preln_elementwise_groupnorm_act_pass",
+                "elementwise_groupnorm_act_pass",
+            ]
+            for curr_pass in only_fp16_passes:
+                option.paddle_infer_option.delete_pass(curr_pass)
+        cache_file = os.path.join(model_dir, model_prefix, "_opt_cache/")
         option.trt_option.serialize_file = cache_file
         # Need to enable collect shape for ernie
         if dynamic_shape is not None:
@@ -255,8 +270,8 @@ if __name__ == "__main__":
             args.model_dir, args.unet_model_prefix, args.model_format, device_id=device_id
         )
         print(f"Spend {time.time() - start : .2f} s to load unet model.")
-    elif args.backend == "paddle" or args.backend == "paddle-tensorrt":
-        use_trt = True if args.backend == "paddle-tensorrt" else False
+    elif args.backend == "paddle" or args.backend == "paddle_tensorrt":
+        use_trt = True if args.backend == "paddle_tensorrt" else False
         text_encoder_runtime = create_paddle_inference_runtime(
             args.model_dir,
             args.text_encoder_model_prefix,

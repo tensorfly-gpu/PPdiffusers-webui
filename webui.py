@@ -12,7 +12,8 @@ import zipfile
 from examples.controlnet.gradio_pose2image import process as pose2image
 
 ## UI设计 ##
-with gr.Blocks() as demo:
+block = gr.Blocks().queue()
+with block as demo:
     # 顶部文字
     gr.Markdown("""
     # AI绘画
@@ -211,21 +212,24 @@ with gr.Blocks() as demo:
                 eta,
             ]
 
-    txt2img_button.click(fn=txt2img,
-                      inputs=[model_name, txt2img_prompt, txt2img_negative_prompt, txt2img_sampler, txt2img_Image_size, txt2img_cfg_scale, txt2img_steps, txt2img_seed],
-                      outputs=txt2img_output)
-
-    img2img_button.click(fn=img2img,
-                         inputs=[model_name, img2img_image_init, img2img_prompt, img2img_negative_prompt, img2img_sampler, img2img_Image_size, img2img_strength, img2img_cfg_scale, img2img_steps, img2img_seed],
-                         outputs=img2img_output)
-
-    inpaint_button.click(fn=inpaint,
-                         inputs=[model_name, inpaint_image_mask_init, inpaint_prompt, inpaint_negative_prompt, inpaint_sampler, inpaint_Image_size, inpaint_strength, inpaint_cfg_scale, inpaint_steps, inpaint_seed],
-                         outputs=inpaint_output)
-
-    train_dreambooth_lora_button.click(
-        fn=utils.train_dreambooth_lora,
-        inputs=file_upload,
-        outputs=output_text)
+    # txt2img_button.click(fn=txt2img,
+    #                   inputs=[model_name, txt2img_prompt, txt2img_negative_prompt, txt2img_sampler, txt2img_Image_size, txt2img_cfg_scale, txt2img_steps, txt2img_seed],
+    #                   outputs=txt2img_output)
+    #
+    # img2img_button.click(fn=img2img,
+    #                      inputs=[model_name, img2img_image_init, img2img_prompt, img2img_negative_prompt, img2img_sampler, img2img_Image_size, img2img_strength, img2img_cfg_scale, img2img_steps, img2img_seed],
+    #                      outputs=img2img_output)
+    #
+    # inpaint_button.click(fn=inpaint,
+    #                      inputs=[model_name, inpaint_image_mask_init, inpaint_prompt, inpaint_negative_prompt, inpaint_sampler, inpaint_Image_size, inpaint_strength, inpaint_cfg_scale, inpaint_steps, inpaint_seed],
+    #                      outputs=inpaint_output)
+    #
+    # train_dreambooth_lora_button.click(
+    #     fn=utils.train_dreambooth_lora,
+    #     inputs=file_upload,
+    #     outputs=output_text)
 
     pose2image_button.click(fn=pose2image, inputs=ips, outputs=[result_gallery])
+
+if __name__ == "__main__":
+    demo.launch(share=False)
