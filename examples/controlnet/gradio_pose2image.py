@@ -325,8 +325,7 @@ from ppdiffusers import StableDiffusionControlNetPipeline
 
 apply_openpose = OpenposePaddleDetector()
 
-pipe = StableDiffusionControlNetPipeline.from_pretrained("takuma104/control_sd15_openpose", safety_checker=None)
-
+pipe = StableDiffusionControlNetPipeline.from_pretrained(r"D:\models\takuma104\control_sd15_openpose", safety_checker=None)
 
 def process(
     input_image,
