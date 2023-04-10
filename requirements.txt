@@ -1,8 +1,4 @@
-paddlenlp==2.5.2
-ppdiffusers==0.14.0
-safetensors
+paddlenlp>=2.5.0
 ftfy
 regex
 Pillow
-OmegaConf
-paddlehub

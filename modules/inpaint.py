@@ -34,13 +34,13 @@ def inpaint(model_name, init_image_mask, prompt, negative_prompt, sampler, Image
     width, height = utils.get_size(Image_size)
     seed = random.randint(0, 2 ** 32) if seed == '-1' else int(seed)
 
-    imageio.imwrite("/home/aistudio/PPdiffusers-webui/temp_img.png", init_image_mask["image"])
-    imageio.imwrite("/home/aistudio/PPdiffusers-webui/temp_mask_img.png", init_image_mask["mask"])
+    imageio.imwrite("temp_img.png", init_image_mask["image"])
+    imageio.imwrite("temp_mask_img.png", init_image_mask["mask"])
 
     inpaint = utils.inpaint(
         pipe=utils.pipe,
-        image_path="/home/aistudio/PPdiffusers-webui/temp_img.png",
-        mask_path="/home/aistudio/PPdiffusers-webui/temp_mask_img.png",
+        image_path="temp_img.png",
+        mask_path="temp_mask_img.png",
         prompt=prompt,
         negative_prompt=negative_prompt,
         scheduler_name=sampler,
@@ -54,12 +54,13 @@ def inpaint(model_name, init_image_mask, prompt, negative_prompt, sampler, Image
         seed=seed,
         fp16=False)     #  半精度推理
 
-    inpaint_save_path = os.path.join("/home/aistudio/PPdiffusers-webui/output", "result_inpaint_temp.jpg")
+    inpaint_save_path = os.path.join("output", "result_inpaint_temp.jpg")
     inpaint.save(inpaint_save_path)
 
-    save_path = os.path.join("/home/aistudio/PPdiffusers-webui/output", "result_inpaint.jpg")
+    save_path = os.path.join("output", "result_inpaint.jpg")
 
     # 后处理inpaint图，非mask区域与原图保持一致
-    inpaint_post_process(image_path="/home/aistudio/PPdiffusers-webui/temp_img.png", mask_path="/home/aistudio/PPdiffusers-webui/temp_mask_img.png", inpaint_path=inpaint_save_path, save_path=save_path)
+    inpaint_post_process(image_path="temp_img.png", mask_path="temp_mask_img.png", inpaint_path=inpaint_save_path,
+                               save_path=save_path)
 
     return Image.open(save_path)

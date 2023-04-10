@@ -25,13 +25,6 @@ python gradio_canny2image.py
 ```
 ![image](https://user-images.githubusercontent.com/20476674/222131385-0dfaa370-fb11-4b2b-9ef5-36143557578b.png)
 
-## Hed to Image
-采用Hed边缘检测图片作为控制条件。
-```
-python gradio_hed2image.py
-```
-![image](https://user-images.githubusercontent.com/20476674/223642261-d5bdbd83-06f9-459b-8224-486f2235f7a6.png)
-
 
 ## Pose to Image
 采用OpenPose姿态图片作为控制条件。
@@ -78,6 +71,7 @@ python -u train_txt2img_control_trainer.py \
     --dataloader_num_workers 4 \
     --pretrained_model_name_or_path runwayml/stable-diffusion-v1-5 \
     --max_grad_norm -1 \
+    --use_paddle_conv_init True \
     --file_path ./fill50k \
     --recompute True \
     --overwrite_output_dir
@@ -146,6 +140,7 @@ python -u -m paddle.distributed.launch --gpus "0,1,2,3,4,5,6,7" train_txt2img_co
     --pretrained_model_name_or_path runwayml/stable-diffusion-v1-5 \
     --max_grad_norm -1 \
     --file_path ./fill50k \
+    --use_paddle_conv_init True \
     --recompute True \
     --overwrite_output_dir
 ```
