@@ -9,10 +9,10 @@ def img2img(model_name, init_image, prompt, negative_prompt, sampler, Image_size
     width, height = utils.get_size(Image_size)
     seed = random.randint(0, 2 ** 32) if seed == '-1' else int(seed)
 
-    Image.fromarray(init_image).save("temp_img.jpg")
+    Image.fromarray(init_image).save("/home/aistudio/PPdiffusers-webui/temp_img.jpg")
     img2img = utils.img2img(
         pipe=utils.pipe,
-        image_path="temp_img.jpg",
+        image_path="/home/aistudio/PPdiffusers-webui/temp_img.jpg",
         prompt=prompt,
         negative_prompt=negative_prompt,
         scheduler_name=sampler,
@@ -26,6 +26,6 @@ def img2img(model_name, init_image, prompt, negative_prompt, sampler, Image_size
         seed=seed,
         fp16=False)
 
-    save_path = os.path.join("output", "result_img2img_temp.jpg")
+    save_path = os.path.join("/home/aistudio/PPdiffusers-webui/output", "result_img2img_temp.jpg")
     img2img.save(save_path)
     return Image.open(save_path)

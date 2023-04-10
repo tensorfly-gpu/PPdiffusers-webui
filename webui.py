@@ -9,14 +9,14 @@ from modules import txt2img, img2img, inpaint
 import zipfile
 
 # controlnet #
-from examples.controlnet.gradio_pose2image import process as pose2image
+# from examples.controlnet.gradio_pose2image import process as pose2image
 
 ## UI设计 ##
 with gr.Blocks() as demo:
     # 顶部文字
     gr.Markdown("""
     # AI绘画
-    ### 基于百度飞桨的大型开源项目：https://github.com/tensorfly-gpu/PPdiffusers-webui
+    ### 开源项目地址：https://github.com/tensorfly-gpu/PPdiffusers-webui
     """)
 
     # 暂不支持换模型
@@ -164,52 +164,52 @@ with gr.Blocks() as demo:
                 with gr.TabItem("train text2image lora"):
                     test3 = gr.Textbox(label="seed", default="-1", lines=1, placeholder="请输入种子，默认-1")
 
-        with gr.TabItem("ControlNet"):
-            with gr.Row():
-                with gr.Column():
-                    input_image = gr.Image(source="upload", type="numpy")
-                    hand = gr.Checkbox(label="detect hand", value=False)
-                    prompt = gr.Textbox(label="Prompt")
-                    pose2image_button = gr.Button(label="Run")
-                    with gr.Accordion("Advanced options", open=False):
-                        num_samples = gr.Slider(label="Images", minimum=1, maximum=12, value=1, step=1)
-                        image_resolution = gr.Slider(label="Image Resolution", minimum=256, maximum=768, value=512,
-                                                     step=64)
-                        strength = gr.Slider(label="Control Strength", minimum=0.0, maximum=2.0, value=1.0,
-                                             step=0.01)
-                        guess_mode = gr.Checkbox(label="Guess Mode", value=False)
-                        detect_resolution = gr.Slider(
-                            label="OpenPose Resolution", minimum=128, maximum=1024, value=512, step=1
-                        )
-                        ddim_steps = gr.Slider(label="Steps", minimum=1, maximum=100, value=20, step=1)
-                        scale = gr.Slider(label="Guidance Scale", minimum=0.1, maximum=30.0, value=9.0, step=0.1)
-                        seed = gr.Slider(label="Seed", minimum=-1, maximum=2147483647, step=1, randomize=True)
-                        eta = gr.Number(label="eta (DDIM)", value=0.0)
-                        a_prompt = gr.Textbox(label="Added Prompt", value="best quality, extremely detailed")
-                        n_prompt = gr.Textbox(
-                            label="Negative Prompt",
-                            value="longbody, lowres, bad anatomy, bad hands, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality",
-                        )
-                with gr.Column():
-                    result_gallery = gr.Gallery(label="Output", show_label=False, elem_id="gallery").style(
-                        grid=2, height="auto"
-                    )
-            ips = [
-                input_image,
-                hand,
-                prompt,
-                a_prompt,
-                n_prompt,
-                num_samples,
-                image_resolution,
-                detect_resolution,
-                ddim_steps,
-                guess_mode,
-                strength,
-                scale,
-                seed,
-                eta,
-            ]
+        # with gr.TabItem("ControlNet"):
+        #     with gr.Row():
+        #         with gr.Column():
+        #             input_image = gr.Image(source="upload", type="numpy")
+        #             hand = gr.Checkbox(label="detect hand", value=False)
+        #             prompt = gr.Textbox(label="Prompt")
+        #             pose2image_button = gr.Button(label="Run")
+        #             with gr.Accordion("Advanced options", open=False):
+        #                 num_samples = gr.Slider(label="Images", minimum=1, maximum=12, value=1, step=1)
+        #                 image_resolution = gr.Slider(label="Image Resolution", minimum=256, maximum=768, value=512,
+        #                                              step=64)
+        #                 strength = gr.Slider(label="Control Strength", minimum=0.0, maximum=2.0, value=1.0,
+        #                                      step=0.01)
+        #                 guess_mode = gr.Checkbox(label="Guess Mode", value=False)
+        #                 detect_resolution = gr.Slider(
+        #                     label="OpenPose Resolution", minimum=128, maximum=1024, value=512, step=1
+        #                 )
+        #                 ddim_steps = gr.Slider(label="Steps", minimum=1, maximum=100, value=20, step=1)
+        #                 scale = gr.Slider(label="Guidance Scale", minimum=0.1, maximum=30.0, value=9.0, step=0.1)
+        #                 seed = gr.Slider(label="Seed", minimum=-1, maximum=2147483647, step=1, randomize=True)
+        #                 eta = gr.Number(label="eta (DDIM)", value=0.0)
+        #                 a_prompt = gr.Textbox(label="Added Prompt", value="best quality, extremely detailed")
+        #                 n_prompt = gr.Textbox(
+        #                     label="Negative Prompt",
+        #                     value="longbody, lowres, bad anatomy, bad hands, missing fingers, extra digit, fewer digits, cropped, worst quality, low quality",
+        #                 )
+        #         with gr.Column():
+        #             result_gallery = gr.Gallery(label="Output", show_label=False, elem_id="gallery").style(
+        #                 grid=2, height="auto"
+        #             )
+        #     ips = [
+        #         input_image,
+        #         hand,
+        #         prompt,
+        #         a_prompt,
+        #         n_prompt,
+        #         num_samples,
+        #         image_resolution,
+        #         detect_resolution,
+        #         ddim_steps,
+        #         guess_mode,
+        #         strength,
+        #         scale,
+        #         seed,
+        #         eta,
+        #     ]
 
     txt2img_button.click(fn=txt2img,
                       inputs=[model_name, txt2img_prompt, txt2img_negative_prompt, txt2img_sampler, txt2img_Image_size, txt2img_cfg_scale, txt2img_steps, txt2img_seed],
@@ -228,4 +228,4 @@ with gr.Blocks() as demo:
         inputs=file_upload,
         outputs=output_text)
 
-    pose2image_button.click(fn=pose2image, inputs=ips, outputs=[result_gallery])
+    # pose2image_button.click(fn=pose2image, inputs=ips, outputs=[result_gallery])

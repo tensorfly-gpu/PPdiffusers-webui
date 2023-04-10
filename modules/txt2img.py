@@ -22,6 +22,6 @@ def txt2img(model_name, prompt, negative_prompt, sampler, Image_size, guidance_s
         enable_parsing=True,
         seed=seed)
 
-    save_path = os.path.join("output", "result_txt2img_temp.jpg")
+    save_path = os.path.join("/home/aistudio/PPdiffusers-webui/output", "result_txt2img_temp.jpg")
     txt2img.save(save_path)
     return Image.open(save_path)
