@@ -1,0 +1,4 @@
+paddlenlp>=2.5.0
+ftfy
+regex
+Pillow
